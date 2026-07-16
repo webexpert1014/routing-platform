@@ -1,0 +1,6 @@
+.agents/
+.cursor/
+.vscode/
+docs/
+graphify-out/
+skills-lock.json
