@@ -9,6 +9,7 @@ from PIL import Image, ImageDraw, ImageFont
 from .hos_engine import short_place, split_remark
 
 BLANK_LOG_PATH = Path(__file__).resolve().parent.parent / "blank-paper-log.png"
+FONTS_DIR = Path(__file__).resolve().parent.parent / "fonts"
 DAY_MINUTES = 24 * 60
 DATE_FIELDS = (
     (675, 821),
@@ -55,25 +56,21 @@ def _minute_to_x(minute: int) -> int:
 
 
 def _load_font(size: int, bold=False):
+    bundled = FONTS_DIR / ("Roboto-Bold.ttf" if bold else "Roboto-Regular.ttf")
     candidates = (
-        (
-            "C:/Windows/Fonts/arialbd.ttf",
-            "C:/Windows/Fonts/arial.ttf",
-            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-        )
+        str(bundled),
+        "C:/Windows/Fonts/arialbd.ttf" if bold else "C:/Windows/Fonts/arial.ttf",
+        "C:/Windows/Fonts/arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
         if bold
-        else (
-            "C:/Windows/Fonts/arial.ttf",
-            "C:/Windows/Fonts/calibri.ttf",
-            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-        )
+        else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
     )
     for path in candidates:
         try:
             return ImageFont.truetype(path, size=size)
         except OSError:
             continue
-    return ImageFont.load_default()
+    raise OSError(f"No log font found; expected bundled font at {bundled}")
 
 
 def _draw_thick_line(
