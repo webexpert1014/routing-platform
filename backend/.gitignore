@@ -2,5 +2,6 @@ __pycache__/
 .env
 .pytest_cache/
 .venv/
+*.sqlite3
 build/
 dist/
