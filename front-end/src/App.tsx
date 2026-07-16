@@ -47,6 +47,15 @@ const App = () => {
 				</div>
 			</header>
 			<main className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 md:px-8">
+				<div
+					className="rounded-lg border border-[#ffac5a]/40 bg-surface-container px-4 py-3 text-sm text-on-surface"
+					role="status">
+					<p className="font-mono text-xs tracking-wider text-[#ffac5a] uppercase">Map data notice</p>
+					<p className="mt-2 text-on-surface-variant">
+						This assessment build uses open-source, free map and geocoding data. Coverage is limited, so lookups,
+						routes, or map results can be incomplete, inaccurate, or fail entirely.
+					</p>
+				</div>
 				<section className="grid min-h-105 gap-6 lg:grid-cols-[360px_1fr] lg:items-stretch">
 					<TripForm isLoading={isLoading} onSubmit={handleSubmit} />
 					{plan ? (
