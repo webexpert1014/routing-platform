@@ -34,9 +34,12 @@ const App = () => {
 		<div className="min-h-full bg-background text-on-surface">
 			<header className="border-b border-outline-variant bg-surface-container-low">
 				<div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-5 md:px-8">
-					<div>
-						<p className="font-mono text-xs tracking-[0.08em] text-primary uppercase">HOS</p>
-						<h1 className="mt-1 text-2xl font-semibold tracking-tight">Routing Platform</h1>
+					<div className="flex items-center gap-3">
+						<img alt="" className="size-10 shrink-0" height={40} src="/logo.svg" width={40} />
+						<div>
+							<p className="font-mono text-xs tracking-[0.08em] text-primary uppercase">HOS</p>
+							<h1 className="mt-1 text-2xl font-semibold tracking-tight">Routing Platform</h1>
+						</div>
 					</div>
 					<p className="hidden max-w-sm text-right text-sm text-on-surface-variant md:block">
 						70-hour / 8-day property-carrying rules · OSM routing · daily paper logs
