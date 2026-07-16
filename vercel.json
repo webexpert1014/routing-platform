@@ -6,6 +6,7 @@
 			"maxDuration": 60
 		}
 	},
+	"outputDirectory": "backend/frontend_dist",
 	"rewrites": [
 		{
 			"destination": "/api/index",
