@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 
-import dj_database_url
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,24 +13,21 @@ SECRET_KEY = (
 )
 DEBUG = os.getenv(
     "DJANGO_DEBUG",
-    "false" if "RENDER" in os.environ else "true",
+    "false" if "VERCEL" in os.environ else "true",
 ).lower() in {"1", "true", "yes"}
 ALLOWED_HOSTS = [
     host.strip()
-    for host in os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+    for host in os.getenv(
+        "DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,.vercel.app"
+    ).split(",")
     if host.strip()
 ]
-RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+VERCEL_URL = os.getenv("VERCEL_URL")
+if VERCEL_URL:
+    ALLOWED_HOSTS.append(VERCEL_URL)
 
 INSTALLED_APPS = [
     "corsheaders",
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.messages",
-    "django.contrib.sessions",
     "django.contrib.staticfiles",
     "rest_framework",
     "trips",
@@ -39,13 +35,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -58,8 +50,6 @@ TEMPLATES = [
         "DIRS": [],
         "OPTIONS": {
             "context_processors": [
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.request",
             ],
         },
@@ -69,19 +59,11 @@ TEMPLATES = [
 WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
-    "default": dj_database_url.config(
-        conn_max_age=600, default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
-    },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
-]
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
@@ -93,21 +75,15 @@ CSRF_TRUSTED_ORIGINS = [
     for origin in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
     if origin.strip()
 ]
-if RENDER_EXTERNAL_HOSTNAME:
-    CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
+if VERCEL_URL:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{VERCEL_URL}")
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-FRONTEND_DIR = BASE_DIR.parent / "front-end" / "dist"
+_frontend_bundled = BASE_DIR / "frontend_dist"
+_frontend_vite = BASE_DIR.parent / "front-end" / "dist"
+FRONTEND_DIR = _frontend_bundled if _frontend_bundled.is_dir() else _frontend_vite
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "/static/"
-WHITENOISE_ROOT = FRONTEND_DIR
-if not DEBUG:
-    STORAGES = {
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-        },
-    }
 
 CORS_ALLOWED_ORIGIN_REGEXES = [r"^http://(localhost|127\.0\.0\.1)(:\d+)?$"]
 CORS_ALLOWED_ORIGINS = [

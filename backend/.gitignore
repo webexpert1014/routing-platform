@@ -5,4 +5,5 @@ __pycache__/
 *.sqlite3
 build/
 dist/
+frontend_dist/
 staticfiles/

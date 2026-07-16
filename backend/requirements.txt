@@ -8,30 +8,19 @@ certifi==2026.6.17
     # via requests
 charset-normalizer==3.4.9
     # via requests
-dj-database-url==3.1.2
-    # via backend
 django==6.0.7
     # via
     #   backend
-    #   dj-database-url
     #   django-cors-headers
     #   djangorestframework
 django-cors-headers==4.9.0
     # via backend
 djangorestframework==3.17.1
     # via backend
-gunicorn==26.0.0
-    # via backend
 idna==3.18
     # via requests
-packaging==26.2
-    # via gunicorn
 pillow==12.3.0
     # via backend
-psycopg==3.3.4
-    # via backend
-psycopg-binary==3.3.4 ; implementation_name != 'pypy'
-    # via psycopg
 python-dotenv==1.2.2
     # via backend
 requests==2.34.2
@@ -39,10 +28,6 @@ requests==2.34.2
 sqlparse==0.5.5
     # via django
 tzdata==2026.3 ; sys_platform == 'win32'
-    # via
-    #   django
-    #   psycopg
+    # via django
 urllib3==2.7.0
     # via requests
-whitenoise==6.12.0
-    # via backend
