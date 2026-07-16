@@ -12,9 +12,3 @@
     readme="README.md"
     requires-python=">=3.13"
     version="0.1.0"
-
-[tool.vercel]
-    entrypoint="core.wsgi:application"
-
-    [tool.vercel.scripts]
-        build="bash build-frontend.sh"
