@@ -1,7 +1,15 @@
 {
 	"$schema": "https://openapi.vercel.sh/vercel.json",
 	"buildCommand": "bash backend/build-frontend.sh",
-	"functions": { "api/index.py": { "maxDuration": 60 } },
-	"installCommand": "uv pip install --system -r requirements.txt",
-	"rewrites": [{ "destination": "/api/index", "source": "/(.*)" }]
+	"functions": {
+		"api/index.py": {
+			"maxDuration": 60
+		}
+	},
+	"rewrites": [
+		{
+			"destination": "/api/index",
+			"source": "/(.*)"
+		}
+	]
 }
