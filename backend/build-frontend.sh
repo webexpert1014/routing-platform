@@ -3,9 +3,7 @@ set -o errexit
 
 cd "$(dirname "$0")/../front-end"
 
-corepack enable
-corepack prepare pnpm@11.12.0 --activate
-
+npm install -g pnpm@10.26.2
 pnpm i --frozen-lockfile
 pnpm build
 
