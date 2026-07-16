@@ -46,15 +46,24 @@ const App = () => {
 					</p>
 				</div>
 			</header>
-			<main className="mx-auto grid max-w-7xl gap-6 px-4 py-8 md:px-8 lg:grid-cols-[360px_1fr]">
-				<div className="flex flex-col gap-4">
+			<main className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 md:px-8">
+				<section className="grid min-h-105 gap-6 lg:grid-cols-[360px_1fr] lg:items-stretch">
 					<TripForm isLoading={isLoading} onSubmit={handleSubmit} />
-					{error && (
-						<div className="rounded-lg border border-error/40 bg-surface-container px-4 py-3 text-sm text-error">
-							{error}
+					{plan ? (
+						<RouteMap plan={plan} />
+					) : (
+						<div className="flex h-full min-h-105 items-center justify-center rounded-lg border border-dashed border-outline-variant bg-surface-container-low px-6 text-center text-sm text-on-surface-variant">
+							Enter trip details to generate an HOS-aware route map and daily log sheets.
 						</div>
 					)}
-					{plan && (
+				</section>
+				{error && (
+					<div className="rounded-lg border border-error/40 bg-surface-container px-4 py-3 text-sm text-error">
+						{error}
+					</div>
+				)}
+				{plan && (
+					<section className="grid gap-6 lg:grid-cols-[360px_1fr] lg:items-start">
 						<div className="rounded-lg border border-outline-variant bg-surface-container p-4">
 							<p className="font-mono text-xs tracking-wider text-on-surface-variant uppercase">Summary</p>
 							<dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
@@ -81,20 +90,9 @@ const App = () => {
 								</p>
 							)}
 						</div>
-					)}
-				</div>
-				<div className="flex flex-col gap-6">
-					{plan ? (
-						<>
-							<RouteMap plan={plan} />
-							<LogGallery logs={plan.logs} />
-						</>
-					) : (
-						<div className="flex min-h-105 items-center justify-center rounded-lg border border-dashed border-outline-variant bg-surface-container-low px-6 text-center text-sm text-on-surface-variant">
-							Enter trip details to generate an HOS-aware route map and daily log sheets.
-						</div>
-					)}
-				</div>
+						<LogGallery logs={plan.logs} />
+					</section>
+				)}
 			</main>
 		</div>
 	);

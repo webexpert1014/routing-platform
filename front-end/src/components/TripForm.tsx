@@ -29,15 +29,17 @@ const TripForm = ({ isLoading, onSubmit }: TripFormProps) => {
 	};
 
 	return (
-		<form className="rounded-lg border border-outline-variant bg-surface-container p-6" onSubmit={handleSubmit}>
-			<div className="mb-6">
+		<form
+			className="flex h-full min-h-105 flex-col rounded-lg border border-outline-variant bg-surface-container p-6"
+			onSubmit={handleSubmit}>
+			<div>
 				<p className="font-mono text-xs tracking-wider text-primary uppercase">Trip inputs</p>
 				<h2 className="mt-2 text-xl font-semibold tracking-tight text-on-surface">Plan HOS route</h2>
 				<p className="mt-1 text-sm text-on-surface-variant">
 					Current → Pickup → Dropoff with FMCSA 70/8 rules and daily log sheets.
 				</p>
 			</div>
-			<div className="flex flex-col gap-4">
+			<div className="mt-6 flex flex-col gap-4">
 				<LocationInput
 					label="Current location"
 					onChange={setCurrentLocation}
@@ -72,8 +74,9 @@ const TripForm = ({ isLoading, onSubmit }: TripFormProps) => {
 					/>
 				</label>
 			</div>
+			<div aria-hidden className="min-h-8 flex-1" />
 			<button
-				className="mt-6 w-full rounded-sm bg-primary-container px-4 py-3 text-sm font-semibold text-on-primary transition disabled:opacity-50"
+				className="w-full shrink-0 rounded-sm bg-primary-container px-4 py-3 text-sm font-semibold text-on-primary transition disabled:opacity-50"
 				disabled={isLoading}
 				type="submit">
 				{isLoading ? "Calculating route…" : "Calculate compliant route"}

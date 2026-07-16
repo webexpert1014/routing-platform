@@ -182,7 +182,7 @@ const RouteMap = ({ plan }: RouteMapProps) => {
 	};
 
 	return (
-		<div className="overflow-hidden rounded-lg border border-outline-variant bg-surface-container">
+		<div className="flex h-full min-h-105 flex-col overflow-hidden rounded-lg border border-outline-variant bg-surface-container">
 			<div className="flex flex-wrap gap-3 border-b border-outline-variant px-4 py-3">
 				{(Object.keys(MARKER_LABELS) as TripMarker["type"][]).map((type) => (
 					<span className="inline-flex items-center gap-2 font-mono text-[11px] text-on-surface-variant" key={type}>
@@ -238,7 +238,7 @@ const RouteMap = ({ plan }: RouteMapProps) => {
 					</button>
 				</div>
 			)}
-			<div className="h-105 w-full">
+			<div className="min-h-70 w-full flex-1">
 				<Map
 					initialViewState={bounds}
 					mapStyle={MAP_STYLE}

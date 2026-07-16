@@ -60,7 +60,16 @@ class TripPlanView(APIView):
             pickup=pickup,
         )
         payload = plan_result_to_dict(plan)
-        payload["logs"] = render_logs(payload["timeline"])
+        payload["logs"] = render_logs(
+            payload["timeline"],
+            {
+                "current_location": current["label"],
+                "dropoff_location": dropoff["label"],
+                "pickup_location": pickup["label"],
+                "total_drive_hours": payload["summary"]["total_drive_hours"],
+                "total_miles": payload["summary"]["total_miles"],
+            },
+        )
         payload["route"] = {
             "coordinates": route["coordinates"],
             "cycle_exceeded_at_mile": plan.cycle_exceeded_at_mile,
