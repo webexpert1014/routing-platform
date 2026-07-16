@@ -72,11 +72,16 @@ USE_TZ = True
 
 CSRF_TRUSTED_ORIGINS = [
     origin.strip()
-    for origin in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
+    for origin in os.getenv(
+        "DJANGO_CSRF_TRUSTED_ORIGINS", "https://*.vercel.app"
+    ).split(",")
     if origin.strip()
 ]
 if VERCEL_URL:
     CSRF_TRUSTED_ORIGINS.append(f"https://{VERCEL_URL}")
+_production_url = os.getenv("VERCEL_PROJECT_PRODUCTION_URL")
+if _production_url:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{_production_url}")
 
 _frontend_bundled = BASE_DIR / "frontend_dist"
 _frontend_vite = BASE_DIR.parent / "front-end" / "dist"
@@ -101,3 +106,6 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "UNAUTHENTICATED_USER": None,
 }
+
+if "VERCEL" in os.environ:
+    DATABASES["default"]["NAME"] = Path("/tmp") / "db.sqlite3"

@@ -21,6 +21,7 @@
 		"vite": "^8.1.4"
 	},
 	"name": "front-end",
+	"packageManager": "pnpm@11.12.0",
 	"private": true,
 	"scripts": {
 		"build": "tsc -b && vite build",

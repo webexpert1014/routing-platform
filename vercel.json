@@ -2,6 +2,6 @@
 	"$schema": "https://openapi.vercel.sh/vercel.json",
 	"buildCommand": "bash backend/build-frontend.sh",
 	"functions": { "api/index.py": { "maxDuration": 60 } },
-	"installCommand": "pip install -r backend/requirements.txt",
+	"installCommand": "uv pip install -r requirements.txt",
 	"rewrites": [{ "destination": "/api/index", "source": "/(.*)" }]
 }

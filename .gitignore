@@ -1,5 +1,7 @@
 .agents/
 .cursor/
+.env*
+.vercel
 .vscode/
 docs/
 graphify-out/
