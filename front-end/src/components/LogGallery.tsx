@@ -83,7 +83,7 @@ const LogGallery = ({ logs }: LogGalleryProps) => {
 				</button>
 				<img
 					alt={active.date_label}
-					className="block h-auto max-h-[min(70vh,52rem)] w-auto max-w-full object-contain"
+					className="block h-auto w-full max-w-full object-contain"
 					src={active.image_base64}
 				/>
 			</div>

@@ -79,13 +79,13 @@ def short_place(location: str) -> str:
     city = parts[0]
     if len(parts) == 1:
         return city
-    region = parts[1]
-    if len(region) == 2 and region.isalpha():
-        return f"{city}, {region.upper()}"
-    abbrev = STATE_ABBREV.get(region.lower())
-    if abbrev:
-        return f"{city}, {abbrev}"
-    return f"{city}, {region}"
+    for region in reversed(parts[1:]):
+        if len(region) == 2 and region.isalpha():
+            return f"{city}, {region.upper()}"
+        abbrev = STATE_ABBREV.get(region.lower())
+        if abbrev:
+            return f"{city}, {abbrev}"
+    return f"{city}, {parts[1]}"
 
 
 def remark_text(place: str, activity: str) -> str:

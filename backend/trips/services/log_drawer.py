@@ -15,17 +15,17 @@ DATE_FIELDS = (
     (837, 996),
     (1012, 1157),
 )
-DATE_Y = 42
+DATE_Y = 28
 FROM_MAX_X = 950
 FROM_X = 400
-FROM_Y = 142
+FROM_Y = 128
 GRID_X0 = 255
 GRID_X1 = 1811
 MILES_BOXES = (
     (209, 545),
     (559, 868),
 )
-MILES_Y = 278
+MILES_Y = 262
 REMARKS_BOTTOM_Y = 1100
 ROW_Y = {
     "driving": 906,
@@ -38,14 +38,14 @@ STROKE_NONCOMPLIANT = (45, 212, 191, 120)
 STROKE_WIDTH = 11
 TO_MAX_X = 1720
 TO_X = 1120
-TO_Y = 142
+TO_Y = 128
 TOTAL_HOURS_X = 1869
 TOTAL_HOURS_WIDTH = 98
 TOTAL_HOURS_Y = {
-    "driving": 901,
-    "off_duty": 765,
-    "on_duty_nd": 970,
-    "sleeper": 832,
+    "driving": 892,
+    "off_duty": 756,
+    "on_duty_nd": 961,
+    "sleeper": 823,
 }
 
 
@@ -203,9 +203,9 @@ def _draw_header(
     timeline: list[dict],
     trip_meta: dict,
 ):
-    date_font = _load_font(36, bold=True)
-    miles_font = _load_font(42, bold=True)
-    place_font = _load_font(28, bold=True)
+    date_font = _load_font(46, bold=True)
+    miles_font = _load_font(50, bold=True)
+    place_font = _load_font(38, bold=True)
     log_date = date.today() + timedelta(days=day_index)
     for value, (x0, x1) in zip(
         (f"{log_date.month:02d}", f"{log_date.day:02d}", f"{log_date.year % 100:02d}"),
@@ -246,7 +246,7 @@ def _draw_header(
 
 
 def _draw_total_hours(draw: ImageDraw.ImageDraw, day_segments: list[dict]):
-    font = _load_font(26, bold=True)
+    font = _load_font(36, bold=True)
     totals = {status: 0 for status in ROW_Y}
     for segment in day_segments:
         status = segment["status"]
@@ -267,12 +267,12 @@ def _draw_total_hours(draw: ImageDraw.ImageDraw, day_segments: list[dict]):
 
 
 def _rotated_text(text: str, fill) -> Image.Image:
-    font = _load_font(22, bold=True)
-    padding = 2
+    font = _load_font(23, bold=True)
+    padding = 3
     width = int(font.getlength(text)) + padding * 2
-    height = 28
+    height = 31
     canvas = Image.new("RGBA", (max(width, 8), height), (0, 0, 0, 0))
-    ImageDraw.Draw(canvas).text((padding, 1), text, fill=fill, font=font)
+    ImageDraw.Draw(canvas).text((padding, 2), text, fill=fill, font=font)
     return canvas.rotate(45, expand=True, resample=Image.Resampling.BICUBIC)
 
 
@@ -381,7 +381,7 @@ def _draw_remarks(
             overlay,
             draw,
             x0,
-            place,
+            short_place(place) if place else _segment_place(segment),
             activity,
             fill,
             remark_index,
